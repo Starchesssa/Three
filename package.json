@@ -1,13 +1,15 @@
 
 {
-  "name": "revideo-min",
+  "name": "revideo-project",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "render": "npx @revideo/cli render main.ts out/video.mp4"
+    "render": "node render.mjs"
   },
   "dependencies": {
-    "@revideo/2d": "^1.0.0",
-    "@revideo/core": "^1.0.0"
+    "@revideo/core": "^0.10.4",
+    "@revideo/2d": "^0.10.4",
+    "@revideo/renderer": "^0.10.4"
   }
 }
