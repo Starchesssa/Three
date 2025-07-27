@@ -2,10 +2,7 @@
 name: Convert Image to SVG with Inkscape
 
 on:
-  push:
-    paths:
-      - "Generated Image July 26, 2025 - 2_25PM.jpeg"
-      - ".github/workflows/convert-to-svg.yml"
+  workflow_dispatch:  # Manual trigger from GitHub UI
 
 jobs:
   vectorize:
@@ -20,12 +17,12 @@ jobs:
 
       - name: Convert image to SVG
         run: |
-          # Replace spaces in filename for safety
+          # Rename file to avoid issues with spaces
           mv "Generated Image July 26, 2025 - 2_25PM.jpeg" input.jpeg
           inkscape input.jpeg --export-plain-svg=output.svg
 
-      - name: Upload SVG
-        uses: actions/upload-artifact@v4
+      - name: Upload SVG as artifact
+        uses: actions/upload-artifact@v3
         with:
           name: traced-svg
           path: output.svg
