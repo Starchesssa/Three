@@ -7,7 +7,7 @@ import subprocess
 image = cv2.imread("Generated Image July 26, 2025 - 2_25PM.jpeg", cv2.IMREAD_GRAYSCALE)
 
 # Threshold to binary
-_, binary = cv2.threshold(image, 100, 255, cv2.THRESH_BINARY)
+_, binary = cv2.threshold(image, 170, 255, cv2.THRESH_BINARY)
 
 # Save as PBM (portable bitmap format)
 cv2.imwrite("temp.pbm", binary)
