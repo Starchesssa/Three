@@ -1,35 +1,178 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Lottie Animation</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.1/lottie.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      background: #f0f0f0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    #lottie-container {
-      width: 300px;
-      height: 300px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>View Lottie Animation</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.6/lottie.min.js"></script>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #eee;
+  }
+  #lottie {
+    width: 512px;
+    height: 512px;
+  }
+</style>
 </head>
 <body>
 
-<div id="lottie-container"></div>
+<div id="lottie"></div>
 
 <script>
-  lottie.loadAnimation({
-    container: document.getElementById('lottie-container'),
+  var animationData = {
+    "v": "4.13.0",
+    "fr": 60,
+    "ip": 0,
+    "op": 180,
+    "w": 512,
+    "h": 512,
+    "nm": "Tree Shaking Animation",
+    "ddd": 0,
+    "assets": [],
+    "layers": [
+      {
+        "ddd": 0,
+        "ty": 4,
+        "ind": 1,
+        "st": 0,
+        "ip": 0,
+        "op": 180,
+        "nm": "Background",
+        "ks": {
+          "o": { "a": 0, "k": 100 },
+          "r": { "a": 0, "k": 0 },
+          "p": { "a": 0, "k": [256, 256] },
+          "a": { "a": 0, "k": [256, 256] },
+          "s": { "a": 0, "k": [100, 100] }
+        },
+        "ao": 0,
+        "shapes": [
+          {
+            "ty": "rc",
+            "nm": "Rectangle Path",
+            "d": 2,
+            "p": { "a": 0, "k": [0, 0] },
+            "s": { "a": 0, "k": [512, 512] },
+            "hd": false
+          },
+          {
+            "ty": "fl",
+            "nm": "Fill",
+            "c": { "a": 0, "k": [0.8, 0.8, 0.8, 1] },
+            "o": { "a": 0, "k": 100 },
+            "r": 1,
+            "hd": false
+          },
+          {
+            "ty": "tr",
+            "o": { "a": 0, "k": 0 },
+            "m": 1,
+            "p": { "a": 0, "k": [0, 0] },
+            "s": { "a": 0, "k": [100, 100] },
+            "r": { "a": 0, "k": 0 },
+            "hd": false
+          }
+        ],
+        "cix": 1
+      },
+      {
+        "ddd": 0,
+        "ty": 4,
+        "ind": 2,
+        "st": 30,
+        "ip": 30,
+        "op": 150,
+        "nm": "Tree",
+        "ks": {
+          "o": { "a": 0, "k": 100 },
+          "r": {
+            "a": 1,
+            "k": [
+              { "t": 30, "v": 0 },
+              { "t": 90, "v": 20 },
+              { "t": 150, "v": 0 }
+            ]
+          },
+          "p": { "a": 0, "k": [256, 350] },
+          "a": { "a": 0, "k": [0, 0] },
+          "s": { "a": 0, "k": [100, 100] }
+        },
+        "ao": 0,
+        "shapes": [
+          {
+            "ty": "sh",
+            "it": [
+              {
+                "ty": "rc",
+                "d": 2,
+                "nm": "Trunk",
+                "p": { "a": 0, "k": [0, 50] },
+                "s": { "a": 0, "k": [50, 100] }
+              },
+              {
+                "ty": "fl",
+                "c": { "a": 0, "k": [0.4, 0.2, 0, 1] },
+                "o": { "a": 0, "k": 100 },
+                "r": 1
+              },
+              {
+                "ty": "tr",
+                "o": { "a": 0, "k": 0 },
+                "m": 1,
+                "p": { "a": 0, "k": [0, 0] },
+                "s": { "a": 0, "k": [100, 100] },
+                "r": { "a": 0, "k": 0 }
+              }
+            ],
+            "nm": "Trunk Group",
+            "hd": false
+          },
+          {
+            "ty": "sh",
+            "it": [
+              {
+                "ty": "el",
+                "d": 2,
+                "nm": "Leaves",
+                "p": { "a": 0, "k": [0, -50] },
+                "s": { "a": 0, "k": [200, 150] }
+              },
+              {
+                "ty": "fl",
+                "c": { "a": 0, "k": [0.2, 0.6, 0, 1] },
+                "o": { "a": 0, "k": 100 },
+                "r": 1
+              },
+              {
+                "ty": "tr",
+                "o": { "a": 0, "k": 0 },
+                "m": 1,
+                "p": { "a": 0, "k": [0, 0] },
+                "s": { "a": 0, "k": [100, 100] },
+                "r": { "a": 0, "k": 0 }
+              }
+            ],
+            "nm": "Leaves Group",
+            "hd": false
+          }
+        ],
+        "cix": 2
+      }
+    ],
+    "markers": []
+  };
+
+  var animation = lottie.loadAnimation({
+    container: document.getElementById('lottie'),
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://assets10.lottiefiles.com/packages/lf20_w51pcehl.json' // Example: Juice Pouring
+    animationData: animationData
   });
 </script>
 
