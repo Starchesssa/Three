@@ -6,29 +6,26 @@ import subprocess
 # Load image in grayscale
 image = cv2.imread("Generated Image July 26, 2025 - 2_25PM.jpeg", cv2.IMREAD_GRAYSCALE)
 
-# Use adaptive thresholding to better detect fine details and faint lines
-binary = cv2.adaptiveThreshold(
-    image, 255,
-    cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-    cv2.THRESH_BINARY_INV,  # Invert so black becomes white for PBM
-    11, 2
-)
+# Slight contrast stretch to make light lines more distinct but still natural
+image = cv2.normalize(image, None, 0, 255, cv2.NORM_MINMAX)
 
-# Optional: thicken lines slightly to ensure visibility (can remove if not needed)
-kernel = np.ones((1, 1), np.uint8)  # 1x1 to preserve tiny shapes
+# Threshold to binary (slightly lower value to catch faint lines)
+_, binary = cv2.threshold(image, 100, 255, cv2.THRESH_BINARY)
+
+# Optional: very light dilation to ensure thin lines remain visible
+kernel = np.ones((1, 1), np.uint8)
 binary = cv2.dilate(binary, kernel, iterations=1)
 
-# Save as PBM (Portable Bitmap) for Potrace
+# Save as PBM (white background, black shapes)
 cv2.imwrite("temp.pbm", binary)
 
-# Convert to SVG using Potrace with detailed settings
+# Use Potrace to convert PBM to SVG, preserving small details
 subprocess.run([
     "potrace", "temp.pbm",
-    "-s",                      # Output SVG
-    "--turdsize", "0",         # Keep even the tiniest paths
-    "--alphamax", "1",         # Avoid curve simplification
-    "--flat",                  # Prevent smoothing into Bezier curves
+    "-s",
+    "--turdsize", "0",         # Keep very small parts
+    "--alphamax", "1",         # No simplification
     "-o", "output.svg"
 ])
 
-print("✅ SVG saved as output.svg with full detail.")
+print("✅ SVG saved as output.svg (clean and detail-preserved)")
