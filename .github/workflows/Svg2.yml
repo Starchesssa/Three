@@ -1,5 +1,5 @@
 
-name: Convert Image to SVG
+name: Convert Image to SVG with VTracer
 
 on:
   workflow_dispatch:
@@ -9,33 +9,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: 📥 Download VTracer binary
+      - name: Download VTracer CLI binary
         run: |
-          wget https://github.com/visioncortex/vtracer/releases/download/v0.6.11/vtracer-x86_64-linux
-          chmod +x vtracer-x86_64-linux
-          mv vtracer-x86_64-linux vtracer
+          wget https://github.com/visioncortex/vtracer/releases/download/v0.6.4/vtracer-linux-amd64
+          chmod +x vtracer-linux-amd64
+          mv vtracer-linux-amd64 vtracer
 
-      - name: 🧰 Install dependencies
+      - name: Install dependencies (ImageMagick for PNG conversion)
         run: sudo apt update && sudo apt install -y imagemagick
 
-      - name: 🖼️ Run SVG Conversion Script
+      - name: Convert JPEG to PNG (for safety if needed)
+        run: convert "Generated Image July 26, 2025 - 2_25PM.jpeg" input.png
+
+      - name: Run VTracer CLI to create SVG
         run: |
-          convert "Generated Image July 26, 2025 - 2_25PM.jpeg" input.png  # Convert to PNG
           ./vtracer --input input.png --output output.svg --mode spline --colormode binary
 
-      - name: 📁 Rename SVG to multiple extensions
+      - name: Rename outputs (.svg, .xml, .html)
         run: |
           cp output.svg svg.svg
           cp output.svg svg.xml
           cp output.svg svg.html
 
-      - name: 📤 Upload all SVG outputs as artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: svg-converted-files
+          name: svg-outputs
           path: |
             output.svg
             svg.svg
