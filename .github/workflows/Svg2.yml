@@ -2,10 +2,6 @@
 name: Convert Image to SVG
 
 on:
-  push:
-    paths:
-      - 'svg.py'
-      - 'Generated Image July 26, 2025 - 2_25PM.jpeg'
   workflow_dispatch:
 
 jobs:
@@ -16,19 +12,21 @@ jobs:
       - name: 📥 Checkout repo
         uses: actions/checkout@v3
 
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: 🧰 Install VTracer
+      - name: 📥 Download VTracer binary
         run: |
-          pip install vtracer
+          wget https://github.com/visioncortex/vtracer/releases/download/v0.6.11/vtracer-x86_64-linux
+          chmod +x vtracer-x86_64-linux
+          mv vtracer-x86_64-linux vtracer
+
+      - name: 🧰 Install dependencies
+        run: sudo apt update && sudo apt install -y imagemagick
 
       - name: 🖼️ Run SVG Conversion Script
-        run: python svg.py
+        run: |
+          convert "Generated Image July 26, 2025 - 2_25PM.jpeg" input.png  # Convert to PNG
+          ./vtracer --input input.png --output output.svg --mode spline --colormode binary
 
-      - name: 📁 Rename SVG to multiple extensions (optional)
+      - name: 📁 Rename SVG to multiple extensions
         run: |
           cp output.svg svg.svg
           cp output.svg svg.xml
