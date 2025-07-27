@@ -9,35 +9,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v3
 
-      - name: Download VTracer CLI binary
+      - name: 📦 Download VTracer CLI binary
         run: |
-          wget https://github.com/visioncortex/vtracer/releases/download/v0.6.4/vtracer-linux-amd64
-          chmod +x vtracer-linux-amd64
-          mv vtracer-linux-amd64 vtracer
+          wget https://github.com/visioncortex/vtracer/releases/download/v0.6.4/vtracer-linux-x64 -O vtracer
+          chmod +x vtracer
+          sudo mv vtracer /usr/local/bin/
 
-      - name: Install dependencies (ImageMagick for PNG conversion)
-        run: sudo apt update && sudo apt install -y imagemagick
+      - name: 🧰 Install dependencies (ImageMagick for PNG conversion)
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
 
-      - name: Convert JPEG to PNG (for safety if needed)
+      - name: 🖼️ Convert JPEG to PNG (if needed)
         run: convert "Generated Image July 26, 2025 - 2_25PM.jpeg" input.png
 
-      - name: Run VTracer CLI to create SVG
-        run: |
-          ./vtracer --input input.png --output output.svg --mode spline --colormode binary
+      - name: ✨ Run VTracer CLI to create SVG
+        run: vtracer -i input.png -o output.svg --mode detail --filter-curve
 
-      - name: Rename outputs (.svg, .xml, .html)
+      - name: 📁 Rename outputs (SVG variants)
         run: |
           cp output.svg svg.svg
           cp output.svg svg.xml
           cp output.svg svg.html
 
-      - name: Upload artifacts
+      - name: 📤 Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: svg-outputs
+          name: svg-converted-files
           path: |
             output.svg
             svg.svg
