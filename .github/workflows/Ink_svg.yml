@@ -1,0 +1,31 @@
+
+name: Convert Image to SVG with Inkscape
+
+on:
+  push:
+    paths:
+      - "Generated Image July 26, 2025 - 2_25PM.jpeg"
+      - ".github/workflows/convert-to-svg.yml"
+
+jobs:
+  vectorize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Inkscape
+        run: sudo apt update && sudo apt install -y inkscape
+
+      - name: Convert image to SVG
+        run: |
+          # Replace spaces in filename for safety
+          mv "Generated Image July 26, 2025 - 2_25PM.jpeg" input.jpeg
+          inkscape input.jpeg --export-plain-svg=output.svg
+
+      - name: Upload SVG
+        uses: actions/upload-artifact@v4
+        with:
+          name: traced-svg
+          path: output.svg
