@@ -22,7 +22,7 @@ jobs:
           inkscape input.jpeg --export-plain-svg=output.svg
 
       - name: Upload SVG as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: traced-svg
           path: output.svg
