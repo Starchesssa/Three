@@ -3,23 +3,23 @@ import cv2
 import numpy as np
 import subprocess
 
-# Load your grayscale image without modifying it
+# Load image in grayscale
 image = cv2.imread("Generated Image July 26, 2025 - 2_25PM.jpeg", cv2.IMREAD_GRAYSCALE)
 
-# Threshold the image without changing the natural look
-# Try values between 80–120 until it matches what you visually see
-_, binary = cv2.threshold(image, 105, 255, cv2.THRESH_BINARY)
+# Invert the image logic: anything that is not white (255) becomes black
+# This turns all non-white into black (for Potrace to trace)
+binary = np.where(image < 250, 0, 255).astype(np.uint8)
 
-# Save as PBM (black on white)
+# Save binary as PBM
 cv2.imwrite("temp.pbm", binary)
 
-# Convert to SVG with Potrace, keeping small details
+# Use Potrace to convert PBM to SVG, keeping all details
 subprocess.run([
     "potrace", "temp.pbm",
     "-s",
-    "--turdsize", "0",         # keep all details
-    "--alphamax", "1",         # avoid curve simplification
+    "--turdsize", "0",       # Keep even the smallest details
+    "--alphamax", "1",       # Preserve shape accuracy
     "-o", "output.svg"
 ])
 
-print("✅ SVG saved as output.svg (looks like original image)")
+print("✅ SVG saved as output.svg (everything not white is now traced)")
