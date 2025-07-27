@@ -1,124 +1,125 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Orange Drop Animation</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.1/lottie.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      background: #e0f7fa;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    #lottie-container {
-      width: 400px;
-      height: 400px;
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-  </style>
-</head>
-<body>
+  <head>
+    <title>Orange Drop Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.1/lottie.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        background: #e0f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      #lottie-container {
+        width: 400px;
+        height: 400px;
+        background: #ffffff;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="lottie-container"></div>
 
-<div id="lottie-container"></div>
-
-<script>
-const animationData = {
-  v: "5.7.4",
-  fr: 30,
-  ip: 0,
-  op: 90,
-  w: 400,
-  h: 400,
-  nm: "Orange drop basic",
-  ddd: 0,
-  assets: [],
-  layers: [
-    {
-      ddd: 0,
-      ind: 1,
-      ty: 4,
-      nm: "Orange",
-      sr: 1,
-      ks: {
-        o: { a: 0, k: 100 },
-        r: { a: 0, k: 0 },
-        p: {
-          a: 1,
-          k: [
-            {
-              i: { x: 0.42, y: 0 },
-              o: { x: 0.58, y: 1 },
-              t: 0,
-              s: [200, 50, 0],
-              e: [200, 330, 0]
+    <script>
+      const animationData = {
+        v: "5.7.4",
+        fr: 30,
+        ip: 0,
+        op: 60,
+        w: 400,
+        h: 400,
+        nm: "Orange drop",
+        ddd: 0,
+        assets: [],
+        layers: [
+          // Orange falling
+          {
+            ddd: 0,
+            ind: 1,
+            ty: 4,
+            nm: "Orange",
+            sr: 1,
+            ks: {
+              o: { a: 0, k: 100 },
+              r: { a: 0, k: 0 },
+              p: {
+                a: 1,
+                k: [
+                  {
+                    i: { x: 0.42, y: 0 },
+                    o: { x: 0.58, y: 1 },
+                    t: 0,
+                    s: [200, 50, 0],
+                    e: [200, 320, 0]
+                  },
+                  { t: 60 }
+                ]
+              },
+              a: { a: 0, k: [0, 0, 0] },
+              s: { a: 0, k: [100, 100, 100] }
             },
-            { t: 90 }
-          ]
-        },
-        a: { a: 0, k: [0, 0, 0] },
-        s: { a: 0, k: [100, 100, 100] }
-      },
-      shapes: [
-        {
-          ty: "el",
-          p: { a: 0, k: [0, 0] },
-          s: { a: 0, k: [40, 40] },
-          nm: "circle path"
-        },
-        {
-          ty: "fl",
-          c: { a: 0, k: [1, 0.6, 0, 1] }, // orange color
-          o: { a: 0, k: 100 },
-          nm: "fill"
-        }
-      ],
-      ao: 0
-    },
-    {
-      ddd: 0,
-      ind: 2,
-      ty: 4,
-      nm: "Bucket",
-      ks: {
-        o: { a: 0, k: 100 },
-        r: { a: 0, k: 0 },
-        p: { a: 0, k: [200, 360, 0] },
-        a: { a: 0, k: [0, 0, 0] },
-        s: { a: 0, k: [100, 100, 100] }
-      },
-      shapes: [
-        {
-          ty: "rc",
-          p: { a: 0, k: [0, 0] },
-          s: { a: 0, k: [100, 40] },
-          r: { a: 0, k: 10 },
-          nm: "bucket shape"
-        },
-        {
-          ty: "fl",
-          c: { a: 0, k: [0.3, 0.3, 0.3, 1] },
-          o: { a: 0, k: 100 },
-          nm: "fill"
-        }
-      ],
-      ao: 0
-    }
-  ]
-};
+            shapes: [
+              {
+                ty: "el",
+                p: { a: 0, k: [0, 0] },
+                s: { a: 0, k: [40, 40] },
+                nm: "circle path"
+              },
+              {
+                ty: "fl",
+                c: { a: 0, k: [1, 0.6, 0, 1] }, // orange color
+                o: { a: 0, k: 100 },
+                nm: "fill"
+              }
+            ],
+            ao: 0
+          },
+          // Bucket
+          {
+            ddd: 0,
+            ind: 2,
+            ty: 4,
+            nm: "Bucket",
+            ks: {
+              o: { a: 0, k: 100 },
+              r: { a: 0, k: 0 },
+              p: { a: 0, k: [200, 360, 0] },
+              a: { a: 0, k: [0, 0, 0] },
+              s: { a: 0, k: [100, 100, 100] }
+            },
+            shapes: [
+              {
+                ty: "rc",
+                p: { a: 0, k: [0, 0] },
+                s: { a: 0, k: [100, 40] },
+                r: { a: 0, k: 10 },
+                nm: "bucket shape"
+              },
+              {
+                ty: "fl",
+                c: { a: 0, k: [0.3, 0.3, 0.3, 1] },
+                o: { a: 0, k: 100 },
+                nm: "fill"
+              }
+            ],
+            ao: 0
+          }
+        ]
+      };
 
-lottie.loadAnimation({
-  container: document.getElementById('lottie-container'),
-  renderer: 'svg',
-  loop: false,
-  autoplay: true,
-  animationData: animationData
-});
-</script>
-
-</body>
+      lottie.loadAnimation({
+        container: document.getElementById("lottie-container"),
+        renderer: "svg",
+        loop: false,
+        autoplay: true,
+        animationData: animationData
+      });
+    </script>
+  </body>
 </html>
