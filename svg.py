@@ -1,14 +1,17 @@
 
-import vtracer
+import subprocess
 
-# Convert image to SVG using VTracer
-vtracer.convert(
-    input_path="Generated Image July 26, 2025 - 2_25PM.jpeg",  # Input image
-    output_path="output.svg",                                   # Output SVG file
-    mode="spline",                                               # Better curves
-    color_mode="grayscale",                                      # Keeps dark/light details
-    filter_speckle=0,                                            # Keeps tiny shapes
-    layer_difference=0.1                                         # Captures faint lines too
-)
+# Input and output file names
+input_file = "Generated Image July 26, 2025 - 2_25PM.jpeg"
+output_file = "output.svg"
 
-print("✅ SVG saved as output.svg")
+# Run vtracer using subprocess
+subprocess.run([
+    "vtracer",
+    "--input", input_file,
+    "--output", output_file,
+    "--mode", "spline",         # or "polygon"
+    "--colormode", "binary",    # or "grayscale", "color"
+])
+
+print("✅ SVG saved as", output_file)
