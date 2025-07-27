@@ -1,28 +1,32 @@
 
-name: Convert Image to SVG with Inkscape
+name: Convert Image to SVG with Inkscape (Headless)
 
 on:
-  workflow_dispatch:  # Manual trigger from GitHub UI
+  workflow_dispatch:
 
 jobs:
   vectorize:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Inkscape
-        run: sudo apt update && sudo apt install -y inkscape
-
-      - name: Convert image to SVG
+      - name: Install Inkscape and Xvfb
         run: |
-          # Rename file to avoid issues with spaces
-          mv "Generated Image July 26, 2025 - 2_25PM.jpeg" input.jpeg
-          inkscape input.jpeg --export-plain-svg=output.svg
+          sudo apt update
+          sudo apt install -y inkscape xvfb
 
-      - name: Upload SVG as artifact
-        uses: actions/upload-artifact@v4
+      - name: Convert image to SVG using Xvfb
+        run: |
+          # Rename image for safety (no spaces)
+          mv "Generated Image July 26, 2025 - 2_25PM.jpeg" input.jpeg
+          
+          # Launch Inkscape inside a virtual display
+          xvfb-run inkscape input.jpeg --export-type=svg --export-filename=output.svg
+
+      - name: Upload SVG output as artifact
+        uses: actions/upload-artifact@v3
         with:
           name: traced-svg
           path: output.svg
