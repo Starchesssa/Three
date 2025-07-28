@@ -1,36 +1,11 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Orange Tree Shaking Animation</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.1/lottie.min.js"></script>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #f0f0f0;
-    }
-    #lottie-container {
-      width: 300px;
-      height: 300px;
-    }
-  </style>
-</head>
-<body>
+<script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
 
-<div id="lottie-container"></div>
-
-<script>
-  lottie.loadAnimation({
-    container: document.getElementById('lottie-container'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'https://assets9.lottiefiles.com/packages/lf20_s8nkg8zq.json' // Orange tree shaking
-  });
-</script>
-
-</body>
-</html>
+<lottie-player 
+    src="https://assets4.lottiefiles.com/packages/lf20_w51pcehl.json"
+    background="transparent"
+    speed="1"
+    style="width: 300px; height: 300px;"
+    loop
+    autoplay>
+</lottie-player>
