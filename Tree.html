@@ -1,238 +1,82 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Advanced Tree Swaying Animation</title>
-<style>
-  body {
-    background-color: #87CEEB; /* Sky blue */
-    overflow: hidden; /* Hide scrollbars */
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* Align tree to bottom */
-  }
+  <meta charset="UTF-8" />
+  <title>Animated Tree</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(#87ceeb, #e0f7fa);
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-  .tree-container {
-    position: relative;
-    width: 300px; /* Adjusted size */
-    height: 400px; /* Adjusted size */
-    margin-bottom: 50px;
-    overflow: hidden; /* Clip overflowing leaves */
-  }
+    .tree {
+      position: relative;
+      width: 20px;
+      height: 150px;
+      background: #8B4513;
+      animation: sway 3s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
 
-  .trunk {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 200px;
-    background-color: #8B4513; /* Brown */
-    border-radius: 15px;
-    transform-origin: bottom center;
-    animation: sway 6s linear infinite; /* Modified sway */
-  }
+    .leaves {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, #228B22 40%, #006400 100%);
+      border-radius: 50%;
+      animation: leafSway 3s ease-in-out infinite alternate;
+    }
 
-  /* Branches CSS (More complex structure) */
-  .branch {
-    position: absolute;
-    background-color: #8B4513;
-    border-radius: 5px;
-    transform-origin: left center; /* Rotation point */
-  }
-    /* Branch Sizes and positions */
-    .branch1 {
-    width: 120px;
-    height: 8px;
-    top: 50px;
-    left: 15px;
-    transform: rotate(20deg);
-    animation: branchSway1 6s linear infinite;
-  }
+    .leaf {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #32CD32;
+      border-radius: 50%;
+      animation: float 5s ease-in-out infinite;
+    }
 
-  .branch2 {
-    width: 100px;
-    height: 6px;
-    top: 80px;
-    left: 25px;
-    transform: rotate(-15deg);
-    animation: branchSway2 6s linear infinite;
-  }
+    .leaf:nth-child(1) { top: 10px; left: 20px; animation-delay: 0s; }
+    .leaf:nth-child(2) { top: 20px; left: 60px; animation-delay: 1s; }
+    .leaf:nth-child(3) { top: 30px; left: 40px; animation-delay: 2s; }
+    .leaf:nth-child(4) { top: 50px; left: 70px; animation-delay: 3s; }
+    .leaf:nth-child(5) { top: 60px; left: 25px; animation-delay: 4s; }
 
-  .branch3 {
-    width: 90px;
-    height: 7px;
-    top: 110px;
-    left: 10px;
-    transform: rotate(30deg);
-    animation: branchSway3 6s linear infinite;
-  }
+    @keyframes sway {
+      0%   { transform: rotate(-3deg); }
+      100% { transform: rotate(3deg); }
+    }
 
-  .branch4 {
-    width: 110px;
-    height: 9px;
-    top: 40px;
-    right: 15px;
-    transform: rotate(-25deg);
-    animation: branchSway4 6s linear infinite;
-  }
+    @keyframes leafSway {
+      0%   { transform: translateX(-50%) rotate(-2deg); }
+      100% { transform: translateX(-50%) rotate(2deg); }
+    }
 
-  .branch5 {
-    width: 80px;
-    height: 5px;
-    top: 70px;
-    right: 20px;
-    transform: rotate(10deg);
-    animation: branchSway5 6s linear infinite;
-  }
-
-  .branch6 {
-    width: 100px;
-    height: 8px;
-    top: 100px;
-    right: 10px;
-    transform: rotate(-35deg);
-    animation: branchSway6 6s linear infinite;
-  }
-  /* Leaf Styles */
-  .leaf {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background-color: green;
-    border-radius: 50% 0;
-    transform-origin: center; /* Important for leaf rotation */
-    animation-timing-function: ease-in-out;
-  }
-    /* leaf postions*/
-  .leaf1 { top: 45px; left: 100px; animation: leafSway1 6s linear infinite, leafFall 10s linear infinite;}
-  .leaf2 { top: 75px; left: 85px;  animation: leafSway2 6s linear infinite, leafFall 8s linear infinite;}
-  .leaf3 { top: 105px; left: 95px; animation: leafSway3 6s linear infinite, leafFall 12s linear infinite;}
-  .leaf4 { top: 35px; right: 90px; animation: leafSway4 6s linear infinite, leafFall 9s linear infinite;}
-  .leaf5 { top: 65px; right: 75px; animation: leafSway5 6s linear infinite, leafFall 11s linear infinite;}
-  .leaf6 { top: 95px; right: 80px; animation: leafSway6 6s linear infinite, leafFall 7s linear infinite;}
-  .leaf7 { top: 60px; left: 50px; animation: leafSway7 6s linear infinite, leafFall 10s linear infinite;}
-  .leaf8 { top: 90px; left: 35px; animation: leafSway8 6s linear infinite, leafFall 8s linear infinite;}
-  .leaf9 { top: 50px; right: 40px; animation: leafSway9 6s linear infinite, leafFall 12s linear infinite;}
-  .leaf10 { top: 80px; right: 25px; animation: leafSway10 6s linear infinite, leafFall 9s linear infinite;}
-
-  /* Animations */
-  @keyframes sway {
-    0%, 100% { transform: translateX(-50%) rotate(-2deg); }
-    50% { transform: translateX(-50%) rotate(2deg); }
-  }
-
-  @keyframes branchSway1 {
-    0%, 100% { transform: rotate(18deg); }
-    50% { transform: rotate(22deg); }
-  }
-
-  @keyframes branchSway2 {
-    0%, 100% { transform: rotate(-17deg); }
-    50% { transform: rotate(-13deg); }
-  }
-
-    @keyframes branchSway3 {
-    0%, 100% { transform: rotate(28deg); }
-    50% { transform: rotate(32deg); }
-  }
-
-  @keyframes branchSway4 {
-    0%, 100% { transform: rotate(-23deg); }
-    50% { transform: rotate(-27deg); }
-  }
-
-  @keyframes branchSway5 {
-    0%, 100% { transform: rotate(8deg); }
-    50% { transform: rotate(12deg); }
-  }
-
-  @keyframes branchSway6 {
-    0%, 100% { transform: rotate(-37deg); }
-    50% { transform: rotate(-33deg); }
-  }
-  /* Leaf swaying animation */
-  @keyframes leafSway1 {
-    0%, 100% { transform: rotate(-5deg); }
-    50% { transform: rotate(5deg); }
-  }
-
-  @keyframes leafSway2 {
-    0%, 100% { transform: rotate(3deg); }
-    50% { transform: rotate(-7deg); }
-  }
-    @keyframes leafSway3 {
-    0%, 100% { transform: rotate(-2deg); }
-    50% { transform: rotate(8deg); }
-  }
-
-  @keyframes leafSway4 {
-    0%, 100% { transform: rotate(6deg); }
-    50% { transform: rotate(-4deg); }
-  }
-
-  @keyframes leafSway5 {
-    0%, 100% { transform: rotate(-1deg); }
-    50% { transform: rotate(9deg); }
-  }
-
-  @keyframes leafSway6 {
-    0%, 100% { transform: rotate(4deg); }
-    50% { transform: rotate(-6deg); }
-  }
-    @keyframes leafSway7 {
-    0%, 100% { transform: rotate(-8deg); }
-    50% { transform: rotate(2deg); }
-  }
-
-  @keyframes leafSway8 {
-    0%, 100% { transform: rotate(7deg); }
-    50% { transform: rotate(-3deg); }
-  }
-
-  @keyframes leafSway9 {
-    0%, 100% { transform: rotate(-4deg); }
-    50% { transform: rotate(6deg); }
-  }
-
-  @keyframes leafSway10 {
-    0%, 100% { transform: rotate(2deg); }
-    50% { transform: rotate(-8deg); }
-  }
-  /*Leaf falling Animation*/
-  @keyframes leafFall {
-    0% {opacity: 1; transform: translateY(0) rotate(0deg);}
-    100% {opacity: 0; transform: translateY(200px) rotate(720deg);} /* Dropping 200px */
-  }
-</style>
+    @keyframes float {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      50%  { transform: translateY(-10px) rotate(20deg); }
+      100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-
-<div class="tree-container">
-  <div class="trunk"></div>
-
-  <!-- Branches (More Branches) -->
-  <div class="branch branch1"></div>
-  <div class="branch branch2"></div>
-  <div class="branch branch3"></div>
-  <div class="branch branch4"></div>
-  <div class="branch branch5"></div>
-  <div class="branch branch6"></div>
-
-
-  <!-- Leaves (More Leaves with individualized animations) -->
-  <div class="leaf leaf1"></div>
-  <div class="leaf leaf2"></div>
-  <div class="leaf leaf3"></div>
-  <div class="leaf leaf4"></div>
-  <div class="leaf leaf5"></div>
-  <div class="leaf leaf6"></div>
-  <div class="leaf leaf7"></div>
-  <div class="leaf leaf8"></div>
-  <div class="leaf leaf9"></div>
-  <div class="leaf leaf10"></div>
-</div>
-
+  <div class="tree">
+    <div class="leaves">
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+    </div>
+  </div>
 </body>
 </html>
