@@ -1,0 +1,100 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Infinite Loop</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #87CEEB;
+      overflow: hidden;
+    }
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .road {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 200px;
+      background: #333;
+    }
+    .lines {
+      position: absolute;
+      bottom: 95px;
+      width: 200%;
+      height: 10px;
+      background: repeating-linear-gradient(
+        to right,
+        #fff 0px,
+        #fff 40px,
+        transparent 40px,
+        transparent 80px
+      );
+      animation: moveRoad 2s linear infinite;
+    }
+
+    @keyframes moveRoad {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .car {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+    }
+    .wheel {
+      animation: spin 1s linear infinite;
+      transform-origin: center;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <!-- Road and moving lines -->
+    <div class="road">
+      <div class="lines"></div>
+    </div>
+
+    <!-- Car SVG -->
+    <svg class="car" viewBox="0 0 512 256">
+      <!-- Car Body -->
+      <rect x="80" y="80" rx="20" ry="20" width="360" height="60" fill="#e63946"/>
+      <path d="M120 80 L160 40 H280 L320 80 Z" fill="#f1faee"/>
+      <rect x="130" y="50" width="50" height="30" fill="#a8dadc"/>
+      <rect x="220" y="50" width="50" height="30" fill="#a8dadc"/>
+
+      <!-- Wheels -->
+      <g class="wheel">
+        <circle cx="140" cy="160" r="30" fill="#000"/>
+        <circle cx="140" cy="160" r="10" fill="#fff"/>
+      </g>
+      <g class="wheel">
+        <circle cx="370" cy="160" r="30" fill="#000"/>
+        <circle cx="370" cy="160" r="10" fill="#fff"/>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
