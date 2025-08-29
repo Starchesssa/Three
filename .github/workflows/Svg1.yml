@@ -1,0 +1,47 @@
+
+name: Convert Image to Neon SVG
+
+on:
+  push:
+    paths:
+      - 'svg1.py'
+      - 'Generated Image July 26, 2025 - 2_25PM.jpeg'
+  workflow_dispatch:
+
+jobs:
+  convert-svg:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: 🧰 Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y potrace
+          pip install opencv-python numpy
+
+      - name: 🖼️ Run Neon SVG Conversion Script
+        run: python svg1.py
+
+      - name: 📁 Rename SVG to multiple extensions (optional)
+        run: |
+          cp hotel_neon.svg svg.svg
+          cp hotel_neon.svg svg.xml
+          cp hotel_neon.svg svg.html
+
+      - name: 📤 Upload all SVG outputs as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: svg-converted-files
+          path: |
+            hotel_neon.svg
+            svg.svg
+            svg.xml
+            svg.html
