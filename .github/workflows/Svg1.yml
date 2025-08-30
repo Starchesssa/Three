@@ -4,7 +4,7 @@ name: Convert Image to SVG
 on:
   push:
     paths:
-      - 'svg.py'
+      - 'svg1.py'
       - 'Generated Image July 26, 2025 - 2_25PM.jpeg'
   workflow_dispatch:
 
@@ -28,7 +28,7 @@ jobs:
           pip install opencv-python numpy
 
       - name: 🖼️ Run SVG Conversion Script
-        run: python svg.py
+        run: python svg1.py
 
       - name: 📁 Rename SVG to multiple extensions (optional)
         run: |
