@@ -1,0 +1,34 @@
+
+name: Auto Brand Images
+
+on:
+  push:
+    paths:
+      - 'A.js'
+      - 'input_images/**'
+  workflow_dispatch:
+
+jobs:
+  brand-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Install dependencies
+        run: npm install jimp
+
+      - name: 🖼️ Run Brandify Script
+        run: node A.js
+
+      - name: 📤 Upload Branded Images
+        uses: actions/upload-artifact@v4
+        with:
+          name: branded-images
+          path: output_images/**
